@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { Routes } from '@routes/index';
 
-import { THEME } from 'src/global/styles/theme';
+import { THEME } from './src/global/styles/theme';
 
 export default function App() {
   return (
