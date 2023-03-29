@@ -7,10 +7,10 @@ module.exports = function (api) {
         'module-resolver',
         {
           root: ['./src'],
-          extensions: ['.ts', '.tsx', '.js', '.json'],
+          extensions: ['.ts', '.tsx', '.js', '.json', '.svg'],
           alias: {
             '@components': './src/components',
-            '@themes': './src/global/themes',
+            '@themes': './src/global/styles',
             '@contexts': './src/contexts',
             '@configs': './src/configs',
             '@screens': './src/screens',
