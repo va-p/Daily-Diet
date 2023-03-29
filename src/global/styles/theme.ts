@@ -8,15 +8,18 @@ export const THEME = {
     GREEN_MID: '#CBE4B4',
     GREEN_LIGHT: '#E5F0DB',
 
-    GREY_1: '#1B1D1E',
-    GREY_2: '#333638',
-    GREY_3: '#5C6265',
-    GREY_4: '#B9BBBC',
-    GREY_5: '#DDDEDF',
-    GREY_6: '#EFF0F0',
-    GREY_7: '#FAFAFA',
+    GRAY_100: '#1B1D1E',
+    GRAY_200: '#333638',
+    GRAY_300: '#5C6265',
+    GRAY_400: '#B9BBBC',
+    GRAY_500: '#DDDEDF',
+    GRAY_600: '#EFF0F0',
+    GRAY_700: '#FAFAFA',
 
     WHITE: '#FFFFFF',
   },
-  FONTS: {},
+  FONTS: {
+    REGULAR: 'NunitoSans_400Regular',
+    BOLD: 'NunitoSans_700Bold',
+  },
 };
