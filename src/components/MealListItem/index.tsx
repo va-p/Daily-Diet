@@ -4,7 +4,6 @@ import {
   Container,
   NameAndStatusContainer,
   Name,
-  MealWithinTheDiet,
   Status,
   Time,
   TimeContainer,
@@ -12,12 +11,12 @@ import {
 } from './styles';
 
 export interface MealProps {
-  id: number;
+  id: string;
   date: string;
   time: string;
   name: string;
   description: string;
-  MealWithinTheDiet: MealWithinTheDiet;
+  mealIsInTheDiet: boolean;
 }
 
 type Props = PressableProps & {
@@ -35,7 +34,7 @@ export function MealListItem({ data, ...rest }: Props) {
 
       <NameAndStatusContainer>
         <Name>{data.name}</Name>
-        <Status MealWithinTheDiet={data.MealWithinTheDiet} />
+        <Status mealIsInTheDiet={data.mealIsInTheDiet} />
       </NameAndStatusContainer>
     </Container>
   );

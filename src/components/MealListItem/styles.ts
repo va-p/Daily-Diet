@@ -4,6 +4,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export type MealWithinTheDiet = boolean;
 
+type Props = {
+  mealIsInTheDiet: MealWithinTheDiet;
+};
+
 export const Container = styled.Pressable`
   width: 100%;
   min-height: 48px;
@@ -52,10 +56,10 @@ export const Name = styled.Text.attrs({
   font-size: ${RFValue(16)}px;
 `;
 
-export const Status = styled.View<MealWithinTheDiet>`
+export const Status = styled.View<Props>`
   width: 14px;
   height: 14px;
-  background-color: ${({ theme, MealWithinTheDiet }) =>
-    MealWithinTheDiet ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
+  background-color: ${({ theme, mealIsInTheDiet }) =>
+    mealIsInTheDiet ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
   border-radius: 7px;
 `;
