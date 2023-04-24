@@ -5,6 +5,7 @@
     "paths": {
       "@themes/*": ["./src/global/styles/*"],
       "@components/*": ["./src/components/*"],
+      "@databases/*": ["./src/databases/*"],
       "@contexts/*": ["./src/contexts/*"],
       "@configs/*": ["./src/configs/*"],
       "@screens/*": ["./src/screens/*"],

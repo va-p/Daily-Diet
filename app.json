@@ -5,6 +5,17 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.vap.DailyDiet"
+    },
+    "ios": {
+      "bundleIdentifier": "com.vap.DailyDiet"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "78a389e9-a292-41d8-9548-34beb32c83bf"
+      }
+    }
   }
 }
