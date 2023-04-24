@@ -15,7 +15,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { useFocusEffect } from '@react-navigation/native';
 import { Plus } from 'phosphor-react-native';
 import { ptBR } from 'date-fns/locale';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 
 import { MealListItem, MealProps } from '@components/MealListItem';
 import { PercentCard } from '@components/PercentCard';
@@ -62,7 +62,18 @@ export function Home({ navigation }: any) {
             };
           }
         }
-        mealsFormatted = Object.values(mealsFormatted);
+        mealsFormatted = Object.values(mealsFormatted).sort(
+          (a: any, b: any) => {
+            const firstDateParsed = parse(a.date, 'dd.MM.yyyy', new Date());
+            const secondDateParsed = parse(b.date, 'dd.MM.yyyy', new Date());
+            return secondDateParsed.getTime() - firstDateParsed.getTime();
+          }
+        );
+        mealsFormatted.sort((a: any, b: any) => {
+          const firstTimeParsed = parse(a.time, "H':'mm", new Date());
+          const secondTimeParsed = parse(b.time, "H':'mm", new Date());
+          return secondTimeParsed.getTime() - firstTimeParsed.getTime();
+        });
 
         // Calc percent of meals in the diet
         let sumMealsInTheDiet = 0;
@@ -108,7 +119,6 @@ export function Home({ navigation }: any) {
   useFocusEffect(
     useCallback(() => {
       fetchMeals();
-      //storageMeals.clearAll();
     }, [])
   );
 
