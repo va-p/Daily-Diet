@@ -1,6 +1,6 @@
-import { THEME } from '@themes/theme';
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
   flex: 1;
@@ -43,5 +43,12 @@ export const MealsContainer = styled.View`
 export const SectionHeader = styled.Text`
   font-family: ${({ theme }) => theme.FONTS.BOLD};
   font-size: ${RFValue(18)}px;
-  color: ${({ theme }) => THEME.COLORS.GRAY_100};
+  color: ${({ theme }) => theme.COLORS.GRAY_100};
+`;
+
+export const ListEmptyComponent = styled.Text`
+  font-family: ${({ theme }) => theme.FONTS.REGULAR};
+  font-size: ${RFValue(18)}px;
+  text-align: center;
+  color: ${({ theme }) => theme.COLORS.GRAY_100};
 `;
