@@ -3,25 +3,32 @@ import { PressableProps } from 'react-native';
 import {
   Container,
   IconContainer,
+  ArrowUp,
   PercentDescription,
   PercentText,
+  TypeProps,
 } from './styles';
-
-import { ArrowUpRight } from 'phosphor-react-native';
-
 import { THEME } from '@themes/theme';
 
 type Props = PressableProps & {
-  type: 'primary' | 'secondary';
+  type: TypeProps;
+  percent: string;
 };
 
-export function Percent({ type = 'primary', ...rest }: Props) {
+export function PercentCard({ type, percent, ...rest }: Props) {
   return (
-    <Container TypeProps={type} {...rest}>
+    <Container type={type} {...rest}>
       <IconContainer>
-        <ArrowUpRight size={24} weight='bold' color={THEME.COLORS.GREEN_DARK} />
+        <ArrowUp
+          type={'positive'}
+          color={
+            type === 'positive'
+              ? THEME.COLORS.GREEN_DARK
+              : THEME.COLORS.RED_DARK
+          }
+        />
       </IconContainer>
-      <PercentText>90,86%</PercentText>
+      <PercentText>{percent}</PercentText>
       <PercentDescription>das refeições dentro da dieta</PercentDescription>
     </Container>
   );

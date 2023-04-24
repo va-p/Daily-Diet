@@ -1,18 +1,21 @@
 import styled from 'styled-components/native';
 
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { ArrowUpRight } from 'phosphor-react-native';
 
-export type TypeProps = 'primary' | 'secondary';
+export type TypeProps = 'positive' | 'negative';
 
-export const Container = styled.Pressable<TypeProps>`
+type Props = {
+  type: TypeProps;
+};
+
+export const Container = styled.Pressable<Props>`
   width: ${RFValue(300)}px;
   height: ${RFValue(102)}px;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme, TypeProps }) =>
-    TypeProps === 'primary'
-      ? theme.COLORS.GREEN_LIGHT
-      : theme.COLORS.RED_LIGHT};
+  background-color: ${({ type, theme }) =>
+    type === 'positive' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   border-radius: ${RFValue(8)}px;
 `;
 
@@ -21,6 +24,11 @@ export const IconContainer = styled.View`
   top: 8px;
   right: 8px;
 `;
+
+export const ArrowUp = styled(ArrowUpRight).attrs({
+  size: 24,
+  weight: 'bold',
+})``;
 
 export const PercentText = styled.Text`
   font-family: ${({ theme }) => theme.FONTS.BOLD};
