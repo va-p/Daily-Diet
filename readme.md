@@ -32,7 +32,7 @@ Aplicativo para te ajudar a acompanhar sua dieta, de forma simples e intuitiva!
 
 ## 🔖 Layout
 
-![alt text](https://github.com/va-p/Daily-Diet/blob/main/screenShots/capa.png?raw=true)
+![alt text](https://github.com/va-p/Daily-Diet/blob/main/screenShots/Capa.png?raw=true)
 
 ## Executando o projeto
 
