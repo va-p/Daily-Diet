@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import {
   Container,
@@ -13,6 +13,7 @@ import {
 } from './styles';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useFocusEffect } from '@react-navigation/native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { ptBR } from 'date-fns/locale';
@@ -22,6 +23,7 @@ import * as Yup from 'yup';
 
 import { ControlledInput } from '@components/Form/ControlledInput';
 import { MealTypeButton } from '@components/Form/MealTypeButton';
+import { MealProps } from '@components/MealListItem';
 import { Header } from '@components/Header';
 import { Button } from '@components/Button';
 
@@ -42,7 +44,9 @@ const schema = Yup.object({
   time: Yup.string(),
 });
 
-export function RegisterMeal() {
+export function RegisterMeal({ route, navigation }) {
+  const [name, setName] = useState();
+  const [description, setDescription] = useState();
   // Set and formtat Date
   const [date, setDate] = useState(new Date());
   const formattedDate = format(date, "dd'/'MM'/'yyyy", {
@@ -70,9 +74,58 @@ export function RegisterMeal() {
     formState: { errors },
   } = useForm<FormData>({ resolver: yupResolver(schema) });
   const [isLoading, setIsLoading] = useState(false);
+  const id = route.params?.id;
 
   function handleSelectMealType(type: boolean) {
     setMealIsInTheDiet(type);
+  }
+
+  function fetchMeal() {
+    const jsonMeals = storageMeals.getString(`${DATABASE_MEALS}`);
+    if (jsonMeals) {
+      const meals = JSON.parse(jsonMeals);
+      const mealSelected = meals.find(
+        (element: MealProps) => element.id === id
+      );
+
+      setName(mealSelected.name);
+      setDescription(mealSelected.description);
+      setDate(new Date(mealSelected.date));
+      setTime(new Date(mealSelected.time));
+      setMealIsInTheDiet(mealSelected.mealIsInTheDiet);
+    }
+  }
+
+  function handleEditMeal(form: FormData) {
+    try {
+      const jsonMeals = storageMeals.getString(`${DATABASE_MEALS}`);
+      if (jsonMeals) {
+        const meals = JSON.parse(jsonMeals);
+        const mealsFiltered = meals.filter((meal: MealProps) => meal.id != id);
+
+        const editedMeal = {
+          id,
+          name: form.name,
+          description: form.description,
+          date: date,
+          time: time,
+          mealIsInTheDiet: mealIsInTheDiet,
+        };
+
+        storageMeals.set(
+          `${DATABASE_MEALS}`,
+          JSON.stringify([...mealsFiltered, editedMeal])
+        );
+
+        Alert.alert('Edição de refeição', 'Refeição editada com sucesso!');
+        reset();
+
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Edição de refeição', `${error.message}`);
+    }
   }
 
   function handleRegisterMeal(form: FormData) {
@@ -87,38 +140,56 @@ export function RegisterMeal() {
     }
     /* Validation Form */
 
-    try {
-      const newMeal = {
-        id: uuid.v4(),
-        name: form.name,
-        description: form.description,
-        date: date,
-        time: time,
-        mealIsInTheDiet: mealIsInTheDiet,
-      };
+    // Edit Meal
+    if (id) {
+      handleEditMeal(form);
+    }
+    // Add Meal
+    else {
+      try {
+        const newMeal = {
+          id: uuid.v4(),
+          name: form.name,
+          description: form.description,
+          date: date,
+          time: time,
+          mealIsInTheDiet: mealIsInTheDiet,
+        };
 
-      const prevMeals = storageMeals.getString(`${DATABASE_MEALS}`);
-      const meals = prevMeals ? JSON.parse(prevMeals) : [];
-      storageMeals.set(
-        `${DATABASE_MEALS}`,
-        JSON.stringify([...meals, newMeal])
-      );
+        const prevMeals = storageMeals.getString(`${DATABASE_MEALS}`);
+        const meals = prevMeals ? JSON.parse(prevMeals) : [];
+        storageMeals.set(
+          `${DATABASE_MEALS}`,
+          JSON.stringify([...meals, newMeal])
+        );
 
-      Alert.alert('Cadastro de refeição', 'Refeição cadastrada com sucesso');
-      reset();
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Cadastro de refeição', `${error.message}`);
+        Alert.alert('Cadastro de refeição', 'Refeição cadastrada com sucesso!');
+        reset();
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Cadastro de refeição', `${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      if (id) {
+        fetchMeal();
+      }
+    }, [])
+  );
+
   return (
     <Container>
-      <Header type='primary' title='Nova Refeição' />
+      <Header type='primary' title={id ? 'Editar Refeição' : 'Nova Refeição'} />
 
       <Form>
         <ControlledInput
           label='Nome'
+          defaultValue={name}
           name='name'
           control={control}
           error={errors.name}
@@ -129,6 +200,7 @@ export function RegisterMeal() {
           textAlignVertical='top'
           multiline
           numberOfLines={5}
+          defaultValue={description}
           name='description'
           control={control}
           error={errors.description}
@@ -193,7 +265,7 @@ export function RegisterMeal() {
 
       <Footer>
         <Button
-          title='Cadastrar refeição'
+          title={id ? 'Salvar alterações' : 'Cadastrar refeição'}
           onPress={handleSubmit(handleRegisterMeal)}
         />
       </Footer>

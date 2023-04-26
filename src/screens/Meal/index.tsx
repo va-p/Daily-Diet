@@ -39,6 +39,10 @@ export function Meal({ route, navigation }) {
     }
   }
 
+  function handleEditMeal(id: string) {
+    navigation.navigate('Registrar Refeição', { id });
+  }
+
   function handleDeleteMeal(id: string) {
     const jsonMeals = storageMeals.getString(`${DATABASE_MEALS}`);
     if (jsonMeals) {
@@ -98,6 +102,7 @@ export function Meal({ route, navigation }) {
         <Button
           icon={<Icon.PencilSimple size={18} color={THEME.COLORS.WHITE} />}
           title='Editar refeição'
+          onPress={() => handleEditMeal(id)}
         />
 
         <Button
