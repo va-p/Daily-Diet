@@ -14,8 +14,8 @@ import {
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { useFocusEffect } from '@react-navigation/native';
 import { Plus } from 'phosphor-react-native';
-import { ptBR } from 'date-fns/locale';
 import { format, parse } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import { MealListItem, MealProps } from '@components/MealListItem';
 import { PercentCard } from '@components/PercentCard';
