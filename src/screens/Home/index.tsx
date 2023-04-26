@@ -116,6 +116,10 @@ export function Home({ navigation }: any) {
     }
   }
 
+  function handleOpenMeal(id: string) {
+    navigation.navigate('Refeição', { id });
+  }
+
   useFocusEffect(
     useCallback(() => {
       fetchMeals();
@@ -148,7 +152,9 @@ export function Home({ navigation }: any) {
         <SectionList
           sections={meals}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({ item }) => <MealListItem data={item} />}
+          renderItem={({ item }) => (
+            <MealListItem data={item} onPress={() => handleOpenMeal(item.id)} />
+          )}
           renderSectionHeader={({ section }) => (
             <SectionHeader>{section.title}</SectionHeader>
           )}
