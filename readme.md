@@ -7,7 +7,7 @@ Aplicativo para te ajudar a acompanhar sua dieta, de forma simples e intuitiva!
 
 - [x] Lista as refeições do usuário;
 - [x] Permite ao usuário adicionar refeições;
-- [] Permite ao usuário editar refeições;
+- [x] Permite ao usuário editar refeições;
 - [x] Permite ao usuário excluir refeições;
 - [x] Exibe as estatísticas do progresso da dieta;
 - [x] Armazena localmente as refeições
