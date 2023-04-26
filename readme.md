@@ -18,6 +18,8 @@ Aplicativo para te ajudar a acompanhar sua dieta, de forma simples e intuitiva!
 - [x] Typescript
 - [x] Expo Bare Workflow
 - [x] Styled Components
+- [x] Prettier
+- [x] ESLint
 - [x] Babel Module Resolver
 - [x] React Native MMKV
 - [x] React Native Responsive Fontsize
