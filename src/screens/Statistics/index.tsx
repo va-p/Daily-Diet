@@ -127,7 +127,10 @@ export function Statistics() {
         <StatisticsRow>
           <StatisticsCardGroup>
             <StatisticCard
-              count={(Number(percentMealsInTheDiet) / 100) * meals.length}
+              count={(
+                (Number(percentMealsInTheDiet) / 100) *
+                meals.length
+              ).toFixed(0)}
               description='refeições dentro da dieta'
               type='positive'
             />
@@ -135,10 +138,10 @@ export function Statistics() {
 
           <StatisticsCardGroup>
             <StatisticCard
-              count={
+              count={(
                 meals.length -
                 (Number(percentMealsInTheDiet) / 100) * meals.length
-              }
+              ).toFixed(0)}
               description='refeições fora da dieta'
               type='negative'
             />

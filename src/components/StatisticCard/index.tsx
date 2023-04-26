@@ -8,7 +8,7 @@ import {
 
 type Props = {
   type: StatisticCardTypeProps;
-  count: number;
+  count: number | string;
   description: string;
 };
 
