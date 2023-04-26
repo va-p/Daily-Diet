@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Alert } from 'react-native';
 import {
   Container,
   Footer,
@@ -13,6 +14,7 @@ import {
 
 import { useFocusEffect } from '@react-navigation/native';
 import * as Icon from 'phosphor-react-native';
+import { format } from 'date-fns';
 
 import { MealProps } from '@components/MealListItem';
 import { Header } from '@components/Header';
@@ -20,9 +22,8 @@ import { Button } from '@components/Button';
 import { THEME } from '@themes/theme';
 
 import { DATABASE_MEALS, storageMeals } from '@databases/database';
-import { format } from 'date-fns';
 
-export function Meal({ route }) {
+export function Meal({ route, navigation }) {
   const [meal, setMeal] = useState<MealProps>({} as MealProps);
   const id = route.params?.id;
 
@@ -36,6 +37,24 @@ export function Meal({ route }) {
 
       setMeal(mealSelected);
     }
+  }
+
+  function handleDeleteMeal(id: string) {
+    const jsonMeals = storageMeals.getString(`${DATABASE_MEALS}`);
+    if (jsonMeals) {
+      const meals = JSON.parse(jsonMeals);
+      const mealsFiltered = meals.filter((meal: MealProps) => meal.id != id);
+      storageMeals.set(`${DATABASE_MEALS}`, JSON.stringify(mealsFiltered));
+
+      navigation.goBack();
+    }
+  }
+
+  function handleClickDeleteMeal() {
+    Alert.alert('Deseja realmente excluir o registro da refeição?', undefined, [
+      { text: 'Cancelar' },
+      { text: 'Sim, excluir', onPress: () => handleDeleteMeal(id) },
+    ]);
   }
 
   useFocusEffect(
@@ -85,6 +104,7 @@ export function Meal({ route }) {
           icon={<Icon.Trash size={18} />}
           type='secondary'
           title='Excluir refeição'
+          onPress={handleClickDeleteMeal}
         />
       </Footer>
     </Container>
